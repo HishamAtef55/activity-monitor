@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('penalties', function (Blueprint $table) {
             $table->bigIncrements('id')->primary();
-            $table->foreignIdFor(User::class)->constrained('users')->onDelete('cascade');
+            $table->foreignIdFor(User::class)->onDelete('cascade');
             $table->string('reason');
             $table->integer('count')->default(1);
             $table->timestamp('date')->useCurrent();

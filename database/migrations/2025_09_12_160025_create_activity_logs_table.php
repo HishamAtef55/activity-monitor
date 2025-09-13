@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id')->primary();
             $table->nullableUlidMorphs('model', 'model');
             $table->string('action')->nullable();
-            $table->foreignIdFor(User::class)->constrained('users')->onDelete('cascade');           
+            $table->foreignIdFor(User::class)->onDelete('cascade');           
             $table->string('ip_address');
             $table->string('user_agent')->nullable();
             $table->json('properties')->nullable();

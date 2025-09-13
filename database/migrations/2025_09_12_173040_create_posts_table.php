@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigIncrements('id')->primary();
             $table->string('title');
             $table->string('status')->default('pending'); 
-            $table->foreignIdFor(User::class)->constrained('users')->onDelete('cascade');                                                                                         
+            $table->foreignIdFor(User::class)->onDelete('cascade');                                                                                         
             $table->timestamps();
             $table->softDeletes();
         });

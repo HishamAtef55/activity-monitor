@@ -22,7 +22,7 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255','unique:posts'],
             'status' => ['sometimes', 'in:pending,approved,rejected']
         ];
     }
