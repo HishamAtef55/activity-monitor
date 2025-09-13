@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Events\ActivityLogged;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -28,8 +30,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        
-        event(new ActivityLogged($request->user()->id, 'login'));
+
+        $this->logUserIdleSession($request);
 
         return redirect()->intended(route('dashboard', absolute: false));
     }
@@ -39,8 +41,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        event(new ActivityLogged($request->user()->id, 'logout'));
-
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
@@ -48,5 +48,48 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+
+    /**
+     * logoutInactivity
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logoutInactivity(Request $request): JsonResponse
+    {
+        $request->user()->penalties()->create([
+            'reason' => 'inactivity',
+            'date' => now(),
+        ]);
+
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'message' => 'Logged out due to inactivity',
+            'status' => Response::HTTP_OK
+        ], Response::HTTP_OK);
+    }
+
+
+    /**
+     * logUserIdleSession
+     *
+     * @param  Request $request
+     * @return void
+     */
+    private function logUserIdleSession(Request $request): void
+    {
+        array_map(function ($type) use ($request) {
+            event(new ActivityLogged($request->user()->id, $type));
+        }, [
+            'login',
+            'idle_session'
+        ]);
     }
 }

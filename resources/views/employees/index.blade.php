@@ -22,7 +22,7 @@
                                     {{ __('Actions') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-bold tracking-wider">
-                                    {{ __('Idle Counts') }}
+                                    {{ __('Idle Sessions') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 font-bold tracking-wider">
                                     {{ __('Penalties') }}
@@ -39,7 +39,7 @@
                                         {{ $report['actions'] }}
                                     </td>
                                     <td class="px-6 py-4 text-gray-700 whitespace-nowrap">
-                                        {{ $report['idle_count'] }}
+                                        {{ $report['idle_sessions'] }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium

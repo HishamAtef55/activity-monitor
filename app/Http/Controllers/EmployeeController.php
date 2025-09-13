@@ -24,8 +24,8 @@ class EmployeeController extends Controller
         $reports = $employees->map(function ($employee) {
             return [
                 'name' => $employee->name,
-                'actions' => ActivityLog::where('user_id', $employee->id)->count(),
-                'idle_count' => ActivityLog::where('user_id', $employee->id)->where('action', 'idle')->count(),
+                'actions' => ActivityLog::where('user_id', $employee->id)->whereNotIn('action', ['login', 'logout', 'idle_session'])->count(),
+                'idle_sessions' => ActivityLog::where('user_id', $employee->id)->where('action', 'idle_session')->count(),
                 'penalties' => Penalty::where('user_id', $employee->id)->count(),
             ];
         });

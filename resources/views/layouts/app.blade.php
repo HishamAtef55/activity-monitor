@@ -32,5 +32,7 @@
                 {{ $slot }}
             </main>
         </div>
+
+        @include('layouts.idle-monitor')
     </body>
 </html>
