@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -40,5 +41,31 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+
+    /**
+     * Factory state for an admin user.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name' => 'Admin Duaya',
+            'email' => 'admin@duaya.com',
+        ])->afterCreating(function (User $user) {
+            $user->addRole('administrator');
+        });
+    }
+
+    /**
+     * Factory state for an employee user.
+     */
+    public function employee(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            //
+        ])->afterCreating(function (User $user) {
+            $user->addRole('employee');
+        });
     }
 }

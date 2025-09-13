@@ -16,6 +16,28 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @permission('posts-list')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                            {{ __('Posts') }}
+                        </x-nav-link>
+                    </div>
+                @endpermission
+                @permission('settings-list')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('settings.list')" :active="request()->routeIs('settings.list')">
+                            {{ __('Settings') }}
+                        </x-nav-link>
+                    </div>
+                @endpermission
+
+                @permission('employees-list')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
+                            {{ __('Employees') }}
+                        </x-nav-link>
+                    </div>
+                @endpermission
             </div>
 
             <!-- Settings Dropdown -->
