@@ -54,6 +54,7 @@
                 showModal();
                 idleTime = 0;
             } else if (inactivityCount >= 3) {
+                sessionStorage.removeItem('inactivityCount');
                 fetch(logoutEndpoint, {
                     method: 'POST',
                     headers: {
@@ -64,7 +65,6 @@
                 .then(response => {
                     if (response.ok) {
                         hideModal();
-                        sessionStorage.removeItem('inactivityCount');
                         window.location.href = '/login';
                     }
                 })
