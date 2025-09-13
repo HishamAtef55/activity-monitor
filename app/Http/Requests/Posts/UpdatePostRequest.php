@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Posts;
 
+use App\Models\Post;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePostRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +24,14 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255','unique:posts'],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique(Post::class)->ignore($this->route('post')),
+
+            ],
+            'status' => ['sometimes', 'in:pending,approved,rejected']
         ];
     }
 }

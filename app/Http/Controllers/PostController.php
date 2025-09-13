@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\CreatePostRequest;
+use App\Http\Requests\Posts\UpdatePostRequest;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
@@ -79,12 +80,12 @@ class PostController extends Controller
     /**
      * update
      * @param  Post $post
-     * @param  CreatePostRequest $request
+     * @param  UpdatePostRequest $request
      * @return RedirectResponse
      */
     public function update(
         Post $post,
-        CreatePostRequest $request
+        UpdatePostRequest $request
     ): RedirectResponse {
         
         try {
